@@ -1,8 +1,8 @@
-package br.com.movieapp.framework.di
+package br.com.movieapp.core.di
 
 import br.com.movieapp.BuildConfig
-import br.com.movieapp.framework.data.remote.MovieService
-import br.com.movieapp.framework.data.remote.ParamsInterceptor
+import br.com.movieapp.core.data.remote.MovieService
+import br.com.movieapp.core.data.remote.ParamsInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
