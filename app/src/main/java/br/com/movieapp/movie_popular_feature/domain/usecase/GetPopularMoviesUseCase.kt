@@ -1,4 +1,4 @@
-package br.com.movieapp.movie_popular_feature.domain.usease
+package br.com.movieapp.movie_popular_feature.domain.usecase
 
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
