@@ -1,34 +1,57 @@
-package br.com.movieapp.movie_popular_feature.presentation.components
+package br.com.movieapp.search_movie_feature.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import br.com.movieapp.core.domain.model.Movie
+import br.com.movieapp.core.domain.model.MovieSearch
 import br.com.movieapp.core.presentation.components.commom.ErrorScreen
 import br.com.movieapp.core.presentation.components.commom.LoadingView
+import br.com.movieapp.movie_popular_feature.presentation.components.MovieItem
+import br.com.movieapp.search_movie_feature.presentation.MovieSearchEvent
+import br.com.movieapp.ui.theme.black
 
 @Composable
-fun MovieContent(
+fun SearchContent(
     modifier: Modifier = Modifier,
-    pagingMovies: LazyPagingItems<Movie>,
     paddingValues: PaddingValues,
-    onClick: (movieId: Int) -> Unit
+    pagingMovies: LazyPagingItems<MovieSearch>,
+    query: String,
+    onSearch: (String) -> Unit,
+    onEvent: (MovieSearchEvent) -> Unit,
+    onDetail: (movieId: Int) -> Unit
 ) {
-    Box(
-        modifier = modifier.background(Color.Black)
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(black),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
+        SearchComponent(
+            query = query,
+            onSearch = {
+                onSearch(query)
+            },
+            onQueryChangeEvent = {
+                onEvent(it)
+            },
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             contentPadding = paddingValues,
@@ -41,10 +64,10 @@ fun MovieContent(
                 movie?.let {
                     MovieItem(
                         voteAverage = it.voteAverage,
-                        imageUrl = it.imageUrl,
+                        imageUrl = it.imageURL,
                         id = it.id,
                         onClick = { movieId ->
-                            onClick(movieId)
+                            onDetail(movieId)
                         }
                     )
                 }
