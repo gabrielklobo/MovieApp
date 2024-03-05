@@ -1,8 +1,11 @@
 package br.com.movieapp.core.presentation
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -16,8 +19,10 @@ fun MainScreen(navHostController: NavHostController) {
         bottomBar = {
             BottomNavigationBar(navController = navHostController)
         },
-        content = {
-            NavigationGraph(navController = navHostController)
+        content = {paddingValues ->
+            Box(modifier = Modifier.padding(paddingValues)) {
+                NavigationGraph(navController = navHostController)
+            }
         }
     )
 }
