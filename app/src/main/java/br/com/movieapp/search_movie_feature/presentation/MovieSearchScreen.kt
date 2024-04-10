@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.collectAsLazyPagingItems
 import br.com.movieapp.R
+import br.com.movieapp.core.util.UtilFunctions
 import br.com.movieapp.search_movie_feature.presentation.components.SearchContent
 import br.com.movieapp.search_movie_feature.presentation.state.MovieSearchState
 import br.com.movieapp.ui.theme.black
@@ -46,6 +47,7 @@ fun MovieSearchScreen(
                     onEvent(it)
                 },
                 onDetail = { movieId ->
+                    UtilFunctions.logInfo("MOVIE_ID", movieId.toString())
                     navigateToDetailMovie(movieId)
                 }
             )
