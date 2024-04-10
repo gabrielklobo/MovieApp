@@ -1,5 +1,7 @@
 # README
 
+<img src="https://github.com/gitdaniellopes/Movie-App/assets/26637908/6ad756db-2ac7-49de-ae46-cea420221dfa" width="1920">
+
 **This is an Android project using Kotlin and Jetpack Compose, a modern Android native UI library.**
 
 ## Technologies Used
@@ -18,9 +20,6 @@
 **- Hilt**: Dependency injection library for Android.  
 **- Room**: Data persistence library for Android.
 
-
-# README
-
 **Este é um projeto Android utilizando Kotlin e Jetpack Compose, uma biblioteca moderna de IU nativa do Android.**
 
 ## Tecnologias Utilizadas
@@ -38,5 +37,3 @@
 **- Retrofit**: Biblioteca para consumir APIs RESTful.  
 **- Hilt**: Biblioteca de injeção de dependência para Android.  
 **- Room**: Biblioteca de persistência de dados para Android.
-
-<img src="https://github.com/gitdaniellopes/Movie-App/assets/26637908/6ad756db-2ac7-49de-ae46-cea420221dfa" width="1920">
