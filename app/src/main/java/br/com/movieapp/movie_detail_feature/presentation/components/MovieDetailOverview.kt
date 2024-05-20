@@ -49,7 +49,7 @@ fun MovieDetailOverview(
                 text = overview,
                 color = Color.DarkGray,
                 fontFamily = FontFamily.SansSerif,
-                fontSize = 20.sp,
+                fontSize = 15.sp,
                 modifier = Modifier.clickable {
                     expanded = !expanded
                 }
@@ -59,7 +59,7 @@ fun MovieDetailOverview(
                 text = overview,
                 color = Color.DarkGray,
                 fontFamily = FontFamily.SansSerif,
-                fontSize = 20.sp,
+                fontSize = 15.sp,
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.clickable {
