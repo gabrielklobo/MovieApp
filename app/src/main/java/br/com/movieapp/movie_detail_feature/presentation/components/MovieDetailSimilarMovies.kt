@@ -13,12 +13,14 @@ import androidx.paging.compose.LazyPagingItems
 import br.com.movieapp.core.domain.model.Movie
 import br.com.movieapp.core.presentation.components.commom.ErrorScreen
 import br.com.movieapp.core.presentation.components.commom.LoadingView
+import br.com.movieapp.core.util.UtilFunctions
 import br.com.movieapp.movie_popular_feature.presentation.components.MovieItem
 
 @Composable
 fun MovieDetailSimilarMovies(
     pagingMoviesSimilar: LazyPagingItems<Movie>,
-    modifier: Modifier
+    modifier: Modifier,
+    navigateToDetailMovie: (Int) -> Unit
 ) {
 
     LazyVerticalGrid(
@@ -35,7 +37,8 @@ fun MovieDetailSimilarMovies(
                     imageUrl = it.imageUrl,
                     id = it.id,
                     onClick = {
-
+                        UtilFunctions.logInfo("MOVIE_ID", movie.id.toString())
+                        navigateToDetailMovie(movie.id)
                     }
                 )
             }

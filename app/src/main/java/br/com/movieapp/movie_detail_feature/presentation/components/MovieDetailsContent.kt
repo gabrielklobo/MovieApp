@@ -54,6 +54,7 @@ fun MovieDetailsContent(
     isError: String,
     iconColor: Color,
     onAddFavorite: (Movie) -> Unit,
+    navigateToDetailMovie: (Int) -> Unit
 ) {
     Box(
         modifier = modifier
@@ -189,7 +190,8 @@ fun MovieDetailsContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.35f)
-                .align(Alignment.BottomEnd)
+                .align(Alignment.BottomEnd),
+            navigateToDetailMovie = navigateToDetailMovie
         )
     }
 }
@@ -213,6 +215,7 @@ fun MovieDetailsContentPreview() {
         isError = "Error",
         isLoading = false,
         iconColor = Color.Red,
-        onAddFavorite = {}
+        onAddFavorite = {},
+        navigateToDetailMovie = {}
     )
 }
