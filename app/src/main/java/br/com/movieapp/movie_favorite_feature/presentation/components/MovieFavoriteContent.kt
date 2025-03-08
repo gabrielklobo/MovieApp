@@ -7,12 +7,19 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import br.com.movieapp.R
 import br.com.movieapp.core.domain.model.Movie
 import br.com.movieapp.ui.theme.black
+import br.com.movieapp.ui.theme.white
 
 @Composable
 fun MovieFavoriteContent(
@@ -21,7 +28,20 @@ fun MovieFavoriteContent(
     movies: List<Movie>,
     onClick: (id: Int) -> Unit
 ) {
-    Box(modifier = modifier.background(black)) {
+    Box(
+        modifier = modifier.background(black)
+    ) {
+
+        if (movies.isEmpty()) {
+            Text(
+                text = stringResource(id = R.string.favorite_movies_empty),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = white,
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
+
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp),
