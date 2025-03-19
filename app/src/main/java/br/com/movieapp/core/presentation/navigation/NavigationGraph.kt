@@ -10,6 +10,8 @@ import androidx.navigation.navArgument
 import br.com.movieapp.core.util.Constants
 import br.com.movieapp.movie_detail_feature.presentation.MovieDetailScreen
 import br.com.movieapp.movie_detail_feature.presentation.MovieDetailViewModel
+import br.com.movieapp.movie_favorite_feature.presentation.MovieFavoriteScreen
+import br.com.movieapp.movie_favorite_feature.presentation.MovieFavoriteViewModel
 import br.com.movieapp.movie_popular_feature.presentation.MoviePopularScreen
 import br.com.movieapp.movie_popular_feature.presentation.MoviePopularViewModel
 import br.com.movieapp.search_movie_feature.presentation.MovieSearchEvent
@@ -30,7 +32,7 @@ fun NavigationGraph(navController: NavHostController) {
             MoviePopularScreen(
                 uiState = uiState,
                 navigateToDetailMovie = {
-                    navController.navigate(BottomNavItem.MovieDetail.passMovieId(movieId = it))
+                    navController.navigate(DetailScreenNav.DetailScreen.passMovieId(movieId = it))
                 }
             )
         }
@@ -45,17 +47,24 @@ fun NavigationGraph(navController: NavHostController) {
                 onEvent = onEvent,
                 onFetch = onFetch,
                 navigateToDetailMovie = {
-                    navController.navigate(BottomNavItem.MovieDetail.passMovieId(movieId = it))
+                    navController.navigate(DetailScreenNav.DetailScreen.passMovieId(movieId = it))
                 }
             )
         }
 
         composable(BottomNavItem.MovieFavorite.route) {
-
+            val viewModel: MovieFavoriteViewModel = hiltViewModel()
+            val uiState = viewModel.uiState
+            MovieFavoriteScreen(
+                uiState = uiState,
+                navigateToDetailMovie = {
+                    navController.navigate(DetailScreenNav.DetailScreen.passMovieId(movieId = it))
+                }
+            )
         }
 
         composable(
-            route = BottomNavItem.MovieDetail.route,
+            route = DetailScreenNav.DetailScreen.route,
             arguments = listOf(
                 navArgument(Constants.MOVIE_DETAIL_ARGUMENT_KEY) {
                     type = NavType.IntType
@@ -65,15 +74,11 @@ fun NavigationGraph(navController: NavHostController) {
         ) {
             val viewModel: MovieDetailViewModel = hiltViewModel()
             val uiState = viewModel.uiState
-            val getMovieDetail = viewModel::getMovieDetail
+            val onAddFavorite = viewModel::onAddFavorite
 
             MovieDetailScreen(
-                id = it.arguments?.getInt(Constants.MOVIE_DETAIL_ARGUMENT_KEY),
                 uiState = uiState,
-                getMovieDetail = getMovieDetail,
-                navigateToDetailMovie = {
-                    navController.navigate(BottomNavItem.MovieDetail.passMovieId(movieId = it))
-                }
+                onAddFavorite = onAddFavorite
             )
         }
     }
