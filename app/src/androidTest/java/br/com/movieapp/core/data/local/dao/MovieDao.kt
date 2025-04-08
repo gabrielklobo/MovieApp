@@ -124,4 +124,29 @@ class MovieDaoTest {
         assertThat(movies[0].title).isEqualTo(movieEntity.title)
     }
 
+    @Test
+    fun test_isFavorite_should_return_favorite_movie_when_movie_is_marked_as_favorite() = runTest {
+        //Give
+        val movieId = 5321
+        val favoriteMovie = MovieEntity(movieId = movieId, title = "Avengers", imageUrl = "Url")
+        movieDao.insertMovie(favoriteMovie)
+
+        //When
+        var result= movieDao.isFavorite(movieId)
+
+        //Then
+        assertThat(result).isEqualTo(favoriteMovie)
+    }
+    @Test
+    fun test_isFavorite_should_return_null_movie_when_movie_is_not_marked_as_favorite() = runTest {
+        //Give
+        val movieId = 5321
+
+        //When
+        var result= movieDao.isFavorite(movieId)
+
+        //Then
+        assertThat(result).isNull()
+    }
+
 }
