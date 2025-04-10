@@ -132,21 +132,53 @@ class MovieDaoTest {
         movieDao.insertMovie(favoriteMovie)
 
         //When
-        var result= movieDao.isFavorite(movieId)
+        var result = movieDao.isFavorite(movieId)
 
         //Then
         assertThat(result).isEqualTo(favoriteMovie)
     }
+
     @Test
     fun test_isFavorite_should_return_null_movie_when_movie_is_not_marked_as_favorite() = runTest {
         //Give
         val movieId = 5321
 
         //When
-        var result= movieDao.isFavorite(movieId)
+        var result = movieDao.isFavorite(movieId)
 
         //Then
         assertThat(result).isNull()
+    }
+
+    @Test
+    fun test_updateMovie_should_update_a_movie_successfully() = runTest {
+        //Give
+        val movieEntity = MovieEntity(movieId = 1, title = "Homem de Ferro 1", imageUrl = "Url1")
+        movieDao.insertMovie(movieEntity)
+
+        val allMovies = movieDao.getMovies().first()
+        val updateMovie = allMovies[0].copy(title = "Homem Aranha")
+
+        //When
+        movieDao.insertMovie(updateMovie)
+
+        //Then
+        val movies = movieDao.getMovies().first()
+        assertThat(movies[0].title).contains(updateMovie.title)
+    }
+
+    @Test
+    fun test_deleteMovie_should_delete_a_movie_successfully() = runTest {
+        //Give
+        val movieEntity = MovieEntity(movieId = 1, title = "Homem de Ferro 1", imageUrl = "Url1")
+        movieDao.insertMovie(movieEntity)
+
+        //When
+        movieDao.deleteMovie(movieEntity)
+
+        //Then
+        val movies = movieDao.getMovies().first()
+        assertThat(movies).isEmpty()
     }
 
 }
