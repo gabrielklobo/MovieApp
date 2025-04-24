@@ -51,4 +51,19 @@ class MoviePopularViewModelTest {
         //Then
         assertThat(result).isNotNull()
     }
+
+    @Test(expected = RuntimeException::class)
+    fun `must throw an exception when the calling to use case returns an exception`() = runTest {
+        //Given
+        whenever(getPopularMoviesUseCase.invoke()).thenThrow(
+            RuntimeException()
+        )
+
+        //When
+        val result = viewModel.uiState.movies.first()
+
+        //Then
+        assertThat(result).isNull()
+
+    }
 }
