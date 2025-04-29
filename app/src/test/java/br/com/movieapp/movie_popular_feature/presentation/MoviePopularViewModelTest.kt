@@ -64,6 +64,5 @@ class MoviePopularViewModelTest {
 
         //Then
         assertThat(result).isNull()
-
     }
 }
