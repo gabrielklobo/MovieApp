@@ -28,17 +28,17 @@ class MovieDetailViewModel @Inject constructor(
     private val addMovieFavoriteUseCase: AddMovieFavoriteUseCase,
     private val deleteMovieFavoriteUseCase: DeleteMovieFavoriteUseCase,
     private val isMovieFavoriteUseCase: IsMovieFavoriteUseCase,
-    saveStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     var uiState by mutableStateOf(MovieDetailState())
         private set
 
-    private val movieId = saveStateHandle.get<Int>(key = Constants.MOVIE_DETAIL_ARGUMENT_KEY)
+    private val movieId = savedStateHandle.get<Int>(key = Constants.MOVIE_DETAIL_ARGUMENT_KEY)
 
     init {
         movieId?.let { safeModeId ->
-            checkedFavorite(MovieDetailEvent.CheckedFavorite(safeModeId))
+//            checkedFavorite(MovieDetailEvent.CheckedFavorite(safeModeId))
             getMovieDetail(MovieDetailEvent.GetMovieDetail(safeModeId))
         }
     }
