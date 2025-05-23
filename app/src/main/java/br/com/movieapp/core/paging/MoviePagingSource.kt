@@ -4,8 +4,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import br.com.movieapp.core.domain.model.Movie
 import br.com.movieapp.movie_popular_feature.domain.source.MoviePopularRemoteDataSource
-import okio.IOException
-import retrofit2.HttpException
 
 class MoviePagingSource(
     private val remoteDataSource: MoviePopularRemoteDataSource
@@ -26,18 +24,11 @@ class MoviePagingSource(
             val movies = moviePaging.movies
             val totalPages = moviePaging.totalPages
 
-
             LoadResult.Page(
                 data = movies,
                 prevKey = if (pageNumber == 1) null else pageNumber - 1,
                 nextKey = if (pageNumber == totalPages) null else pageNumber + 1
             )
-        } catch (exception: IOException) {
-            exception.printStackTrace()
-            return LoadResult.Error(exception)
-        } catch (exception: HttpException) {
-            exception.printStackTrace()
-            return LoadResult.Error(exception)
         } catch (exception: Exception) {
             LoadResult.Error(exception)
         }
