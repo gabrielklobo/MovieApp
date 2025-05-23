@@ -19,6 +19,8 @@
 **- Retrofit**: Library for consuming RESTful APIs.  
 **- Hilt**: Dependency injection library for Android.  
 **- Room**: Data persistence library for Android.
+**- Mockito**: Mocking framework for unit tests.
+**- JUnit**: Framework for writing and running unit tests.
 
 **Este é um projeto Android utilizando Kotlin e Jetpack Compose, uma biblioteca moderna de IU nativa do Android.**
 
@@ -37,3 +39,5 @@
 **- Retrofit**: Biblioteca para consumir APIs RESTful.  
 **- Hilt**: Biblioteca de injeção de dependência para Android.  
 **- Room**: Biblioteca de persistência de dados para Android.
+**- Mockito**: Framework de mocking para testes unitários.
+**- JUnit**: Framework para escrever e executar testes unitários.
