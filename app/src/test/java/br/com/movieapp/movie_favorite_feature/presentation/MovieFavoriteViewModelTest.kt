@@ -38,9 +38,10 @@ class MovieFavoriteViewModelTest {
     @Test
     fun `must validate the data object values when calling list of favorites`() = runTest {
         //Given
-        whenever(getMoviesFavoriteUseCase.invoke()).thenReturn(
-            flowOf(fakeMoviesFavorite)
-        )
+        whenever(getMoviesFavoriteUseCase.invoke())
+            .thenReturn(
+                flowOf(fakeMoviesFavorite)
+            )
 
         //When
         val result = viewModel.uiState.movies.first()

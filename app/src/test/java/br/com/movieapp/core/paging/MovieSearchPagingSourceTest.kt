@@ -40,7 +40,8 @@ class MovieSearchPagingSourceTest {
     @Test
     fun `must return a success load result when load is called`() = runTest {
         //Given
-        whenever(remoteDataSource.getSearchMovies(any(), any())).thenReturn(movieSearchPagingFactory)
+        whenever(remoteDataSource.getSearchMovies(any(), any()))
+            .thenReturn(movieSearchPagingFactory)
 
         //When
         val result = moviePagingSource.load(
@@ -70,7 +71,8 @@ class MovieSearchPagingSourceTest {
     fun `must return a error load result when load is called`() = runTest {
         //Given
         val exception = RuntimeException()
-        whenever(remoteDataSource.getSearchMovies(any(), any())).thenThrow(exception)
+        whenever(remoteDataSource.getSearchMovies(any(), any()))
+            .thenThrow(exception)
 
         //When
         val result = moviePagingSource.load(

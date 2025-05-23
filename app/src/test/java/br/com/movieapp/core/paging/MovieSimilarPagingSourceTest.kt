@@ -5,8 +5,8 @@ import br.com.movieapp.TestDispatcherRule
 import br.com.movieapp.core.domain.model.Movie
 import br.com.movieapp.core.domain.model.MovieFactory
 import br.com.movieapp.core.domain.model.MoviePagingFactory
-import br.com.movieapp.movie_popular_feature.domain.source.MoviePopularRemoteDataSource
-import com.google.common.truth.Truth.assertThat
+import br.com.movieapp.movie_detail_feature.domain.source.MovieDetailsRemoteDataSource
+import com.google.common.truth.Truth
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,29 +19,30 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class MoviePagingSourceTest {
-
+class MovieSimilarPagingSourceTest {
     @get:Rule
     val dispatcherRule = TestDispatcherRule()
 
     @Mock
-    lateinit var remoteDataSource: MoviePopularRemoteDataSource
+    lateinit var remoteDataSource: MovieDetailsRemoteDataSource
 
     private val movieFactory = MovieFactory()
     private val moviePagingFactory = MoviePagingFactory().create()
 
-    private val moviePagingSource by lazy {
-        MoviePagingSource(remoteDataSource = remoteDataSource)
+    private val moviesSimilarPagingSource by lazy {
+        MovieSimilarPagingSource(
+            movieId = 1,
+            remoteDataSource = remoteDataSource
+        )
     }
-
     @Test
     fun `must return success load result when load is called`() = runTest {
         //Given
-        whenever(remoteDataSource.getPopularMovies(any()))
+        whenever(remoteDataSource.getMoviesSimilar(any(), any()))
             .thenReturn(moviePagingFactory)
 
         //When
-        val result = moviePagingSource.load(
+        val result = moviesSimilarPagingSource.load(
             PagingSource.LoadParams.Refresh(
                 key = null,
                 loadSize = 2,
@@ -55,7 +56,7 @@ class MoviePagingSourceTest {
         )
 
         //Then
-        assertThat(
+        Truth.assertThat(
             PagingSource.LoadResult.Page(
                 data = resultExpected,
                 prevKey = null,
@@ -68,11 +69,11 @@ class MoviePagingSourceTest {
     fun `must return a error load result when load is called`() = runTest {
         //Given
         val exception = RuntimeException()
-        whenever(remoteDataSource.getPopularMovies(any()))
+        whenever(remoteDataSource.getMoviesSimilar(any(), any()))
             .thenThrow(exception)
 
         //When
-        val result = moviePagingSource.load(
+        val result = moviesSimilarPagingSource.load(
             PagingSource.LoadParams.Refresh(
                 key = null,
                 loadSize = 2,
@@ -81,6 +82,7 @@ class MoviePagingSourceTest {
         )
 
         //Then
-        assertThat(PagingSource.LoadResult.Error<Int, Movie>(exception)).isEqualTo(result)
+        Truth.assertThat(PagingSource.LoadResult.Error<Int, Movie>(exception)).isEqualTo(result)
     }
+
 }

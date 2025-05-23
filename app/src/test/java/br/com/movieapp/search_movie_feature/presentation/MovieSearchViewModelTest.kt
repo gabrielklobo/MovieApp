@@ -42,9 +42,10 @@ class MovieSearchViewModelTest {
     fun `must validate paging data object values when calling movie search paging data`() =
         runTest {
             //Give
-            whenever(getSearchMoviesUseCase.invoke(any())).thenReturn(
-                flowOf(fakePagingDataSearchMovies)
-            )
+            whenever(getSearchMoviesUseCase.invoke(any()))
+                .thenReturn(
+                    flowOf(fakePagingDataSearchMovies)
+                )
 
             //When
             viewModel.fetch("")
@@ -57,9 +58,10 @@ class MovieSearchViewModelTest {
     @Test(expected = RuntimeException::class)
     fun `must throw an exception when the calling to use case returns an exception`() = runTest {
         //Given
-        whenever(getSearchMoviesUseCase.invoke(any())).thenThrow(
-            RuntimeException()
-        )
+        whenever(getSearchMoviesUseCase.invoke(any()))
+            .thenThrow(
+                RuntimeException()
+            )
 
         //When
         viewModel.fetch("")

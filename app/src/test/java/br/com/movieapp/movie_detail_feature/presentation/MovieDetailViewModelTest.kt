@@ -77,7 +77,13 @@ class MovieDetailViewModelTest {
         runTest {
             //Given
             whenever(getMovieDetailsUseCase.invoke(any()))
-                .thenReturn(flowOf(ResultData.Success(flowOf(pagingData) to movieDetailsFactory)))
+                .thenReturn(
+                    flowOf(
+                        ResultData.Success(
+                            flowOf(pagingData) to movieDetailsFactory
+                        )
+                    )
+                )
 
             val argumentCaptor = argumentCaptor<GetMovieDetailsUseCase.Params>()
 
@@ -89,15 +95,17 @@ class MovieDetailViewModelTest {
             assertThat(movieDetailsFactory.id).isEqualTo(argumentCaptor.firstValue.movieId)
 
             val movieDetails = viewModel.uiState.movieDetails
-            val results = viewModel.uiState.results
             assertThat(movieDetails).isNotNull()
         }
 
     @Test
     fun `must notify uiState with Failure when ger movies details and returns exception`() = runTest {
         //Given
-         val exception = Exception("Um erro ocorreu")
-        whenever(getMovieDetailsUseCase.invoke(any())).thenReturn(flowOf(ResultData.Failure(exception)))
+        val exception = Exception("Um erro ocorreu")
+        whenever(getMovieDetailsUseCase.invoke(any()))
+            .thenReturn(
+                flowOf(ResultData.Failure(exception))
+            )
 
         //When
         viewModel.uiState.isLoading
@@ -111,8 +119,14 @@ class MovieDetailViewModelTest {
     fun `must call delete favorite and notify of uiState with filled favorite icon when current icon is checked`() = runTest {
         //Given
 
-        whenever(deleteMovieDetailsUseCase.invoke(any())).thenReturn(flowOf(ResultData.Success(Unit)))
-        whenever(isMovieFavoriteUseCase.invoke(any())).thenReturn(flowOf(ResultData.Success(true)))
+        whenever(deleteMovieDetailsUseCase.invoke(any()))
+            .thenReturn(
+                flowOf(ResultData.Success(Unit))
+            )
+        whenever(isMovieFavoriteUseCase.invoke(any()))
+            .thenReturn(
+                flowOf(ResultData.Success(true))
+            )
 
         val deleteArgumentCaptor = argumentCaptor<DeleteMovieFavoriteUseCase.Params>()
         val checkedArgumentCaptor = argumentCaptor<IsMovieFavoriteUseCase.Params>()
@@ -135,8 +149,14 @@ class MovieDetailViewModelTest {
     fun `must notify uiState with filled favorite icon when current icon is unchecked`() = runTest {
         //Given
 
-        whenever(addMovieFavoriteUseCase.invoke(any())).thenReturn(flowOf(ResultData.Success(Unit)))
-        whenever(isMovieFavoriteUseCase.invoke(any())).thenReturn(flowOf(ResultData.Success(false)))
+        whenever(addMovieFavoriteUseCase.invoke(any()))
+            .thenReturn(
+                flowOf(ResultData.Success(Unit))
+            )
+        whenever(isMovieFavoriteUseCase.invoke(any()))
+            .thenReturn(
+                flowOf(ResultData.Success(false))
+            )
 
         val addArgumentCaptor = argumentCaptor<AddMovieFavoriteUseCase.Params>()
         val checkedArgumentCaptor = argumentCaptor<IsMovieFavoriteUseCase.Params>()
@@ -158,7 +178,10 @@ class MovieDetailViewModelTest {
     @Test
     fun `must notify uiState with bookmark icon filled in if bookmark check returns true`() = runTest {
         //Given
-        whenever(isMovieFavoriteUseCase.invoke(any())).thenReturn(flowOf(ResultData.Success(true)))
+        whenever(isMovieFavoriteUseCase.invoke(any()))
+            .thenReturn(
+                flowOf(ResultData.Success(true))
+            )
         val checkedArgumentCaptor = argumentCaptor<IsMovieFavoriteUseCase.Params>()
 
         //When
@@ -175,7 +198,10 @@ class MovieDetailViewModelTest {
     @Test
     fun `must notify uiState with bookmark icon filled in if bookmark check returns false`() = runTest {
         //Given
-        whenever(isMovieFavoriteUseCase.invoke(any())).thenReturn(flowOf(ResultData.Success(false)))
+        whenever(isMovieFavoriteUseCase.invoke(any()))
+            .thenReturn(
+                flowOf(ResultData.Success(false))
+            )
         val checkedArgumentCaptor = argumentCaptor<IsMovieFavoriteUseCase.Params>()
 
         //When
