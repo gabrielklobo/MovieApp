@@ -15,10 +15,9 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
-
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class AddMovieFavoriteUseCaseImplTest {
+class DeleteMovieFavoriteUseCaseImplTest {
 
     @get:Rule
     val dispatcherRule = TestDispatcherRule()
@@ -28,8 +27,8 @@ class AddMovieFavoriteUseCaseImplTest {
 
     private val movie = MovieFactory().create(MovieFactory.Poster.Avengers)
 
-    private val addMovieFavoriteUseCase by lazy {
-        AddMovieFavoriteUseCaseImpl(movieFavoriteRepository)
+    private val deleteMovieFavoriteUseCase by lazy {
+        DeleteMovieFavoriteUseCaseImpl(movieFavoriteRepository)
     }
 
     @Test
@@ -39,8 +38,8 @@ class AddMovieFavoriteUseCaseImplTest {
             .thenReturn(Unit)
 
         //When
-        val result = addMovieFavoriteUseCase.invoke(
-            params = AddMovieFavoriteUseCase.Params(
+        val result = deleteMovieFavoriteUseCase.invoke(
+            params = DeleteMovieFavoriteUseCase.Params(
                 movie = movie
             )
         ).first()
@@ -53,12 +52,12 @@ class AddMovieFavoriteUseCaseImplTest {
     fun `should return Failure from ResultStatus when the repository throws an exception`() = runTest {
         //Given
         val exception = RuntimeException()
-        whenever(movieFavoriteRepository.insert(movie))
+        whenever(movieFavoriteRepository.delete(movie))
             .thenThrow(exception)
 
         //When
-        val result = addMovieFavoriteUseCase.invoke(
-            params = AddMovieFavoriteUseCase.Params(
+        val result = deleteMovieFavoriteUseCase.invoke(
+            params = DeleteMovieFavoriteUseCase.Params(
                 movie = movie
             )
         ).first()
