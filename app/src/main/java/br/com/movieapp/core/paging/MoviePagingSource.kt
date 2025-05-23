@@ -30,7 +30,7 @@ class MoviePagingSource(
             LoadResult.Page(
                 data = movies,
                 prevKey = if (pageNumber == 1) null else pageNumber - 1,
-                nextKey = if (pageNumber == totalPages) null else pageNumber +1
+                nextKey = if (pageNumber == totalPages) null else pageNumber + 1
             )
         } catch (exception: IOException) {
             exception.printStackTrace()
@@ -38,6 +38,8 @@ class MoviePagingSource(
         } catch (exception: HttpException) {
             exception.printStackTrace()
             return LoadResult.Error(exception)
+        } catch (exception: Exception) {
+            LoadResult.Error(exception)
         }
     }
 

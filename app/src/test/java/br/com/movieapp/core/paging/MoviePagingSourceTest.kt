@@ -2,6 +2,7 @@ package br.com.movieapp.core.paging
 
 import androidx.paging.PagingSource
 import br.com.movieapp.TestDispatcherRule
+import br.com.movieapp.core.domain.model.Movie
 import br.com.movieapp.core.domain.model.MovieFactory
 import br.com.movieapp.core.domain.model.MoviePagingFactory
 import br.com.movieapp.movie_popular_feature.domain.source.MoviePopularRemoteDataSource
@@ -39,7 +40,6 @@ class MoviePagingSourceTest {
         whenever(remoteDataSource.getPopularMovies(any())).thenReturn(moviePagingFactory)
 
         //When
-
         val result = moviePagingSource.load(
             PagingSource.LoadParams.Refresh(
                 key = null,
@@ -54,10 +54,40 @@ class MoviePagingSourceTest {
         )
 
         //Then
-        assertThat(PagingSource.LoadResult.Page(
-            data = resultExpected,
-            prevKey = null,
-            nextKey = null
-        )).isEqualTo(result)
+        assertThat(
+            PagingSource.LoadResult.Page(
+                data = resultExpected,
+                prevKey = null,
+                nextKey = null
+            )
+        ).isEqualTo(result)
     }
+
+    @Test
+    fun `must return a error load result when load is called`() = runTest {
+        //Given
+        val exception = RuntimeException()
+        whenever(remoteDataSource.getPopularMovies(any())).thenThrow(exception)
+
+        //When
+        val result = moviePagingSource.load(
+            PagingSource.LoadParams.Refresh(
+                key = null,
+                loadSize = 2,
+                placeholdersEnabled = false
+            )
+        )
+
+        //Then
+        assertThat(PagingSource.LoadResult.Error<Int, Movie>(exception)).isEqualTo(result)
+    }
+
+//    @Test
+//    fun ``() = runTest {
+//        //Given
+//
+//        //When
+//
+//        //Then
+//    }
 }
