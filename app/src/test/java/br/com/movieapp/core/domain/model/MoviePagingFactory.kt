@@ -1,7 +1,5 @@
 package br.com.movieapp.core.domain.model
 
-import br.com.movieapp.core.domain.model.MovieFactory.Poster
-
 class MoviePagingFactory {
 
     fun create() = MoviePaging(

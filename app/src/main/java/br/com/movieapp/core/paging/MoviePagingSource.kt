@@ -3,7 +3,6 @@ package br.com.movieapp.core.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import br.com.movieapp.core.domain.model.Movie
-import br.com.movieapp.movie_popular_feature.data.mapper.toMovie
 import br.com.movieapp.movie_popular_feature.domain.source.MoviePopularRemoteDataSource
 import okio.IOException
 import retrofit2.HttpException
