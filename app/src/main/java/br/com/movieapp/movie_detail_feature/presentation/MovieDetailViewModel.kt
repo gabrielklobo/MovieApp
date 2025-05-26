@@ -40,12 +40,16 @@ class MovieDetailViewModel @Inject constructor(
     init {
         movieId?.let { safeModeId ->
             checkedFavorite(MovieDetailEvent.CheckedFavorite(safeModeId))
-            //getMovieDetail(MovieDetailEvent.GetMovieDetail(safeModeId))
+            getMovieDetail(MovieDetailEvent.GetMovieDetail(safeModeId))
         }
     }
 
     private fun checkedFavorite(checkedFavorite: MovieDetailEvent.CheckedFavorite) {
         event(checkedFavorite)
+    }
+
+    private fun getMovieDetail(getMovieDetail: MovieDetailEvent.GetMovieDetail){
+        event(getMovieDetail)
     }
 
     fun onAddFavorite(movie: Movie) {
