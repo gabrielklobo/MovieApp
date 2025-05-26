@@ -1,10 +1,10 @@
-package br.com.movieapp.movie_popular_feature.domain.usecase
+package br.com.movieapp.search_movie_feature.domain.usecase
 
 import androidx.paging.PagingConfig
 import br.com.movieapp.TestDispatcherRule
-import br.com.movieapp.core.domain.model.MovieFactory
-import br.com.movieapp.core.domain.model.PagingSourceMoviesFactory
-import br.com.movieapp.movie_popular_feature.domain.repository.MoviePopularRepository
+import br.com.movieapp.core.domain.model.MovieSearchFactory
+import br.com.movieapp.core.domain.model.PagingSourceMoviesSearchFactory
+import br.com.movieapp.search_movie_feature.domain.repository.MovieSearchRepository
 import com.google.common.truth.Truth
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
@@ -20,33 +20,33 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class GetPopularMoviesUseCaseImplTest {
-
+class GetMovieSearchUseCaseImplTest {
     @get:Rule
     val dispatcherRule = TestDispatcherRule()
 
     @Mock
-    lateinit var moviePopularRepository: MoviePopularRepository
+    lateinit var movieSearchRepository: MovieSearchRepository
 
-    private val movies = MovieFactory().create(poster = MovieFactory.Poster.Avengers)
+    private val movies = MovieSearchFactory().create(poster = MovieSearchFactory.Poster.Avengers)
 
-    private val pagingSourceFake = PagingSourceMoviesFactory().create(
+    private val pagingSourceFake = PagingSourceMoviesSearchFactory().create(
         listOf(movies)
     )
 
-    private val getPopularMoviesUseCase by lazy {
-        GetPopularMoviesUseCaseImpl(moviePopularRepository)
+    private val getMovieSearchUseCaseImpl by lazy {
+        GetMovieSearchUseCaseImpl(movieSearchRepository)
     }
 
     @Test
     fun `should validate flow paging data creation when invoke from use case is called`() = runTest {
         //Given
-        whenever(moviePopularRepository.getPopularMovies())
+        whenever(movieSearchRepository.getSearchMovies(query = ""))
             .thenReturn(pagingSourceFake)
 
         //When
-        val result = getPopularMoviesUseCase.invoke(
-            params = GetPopularMoviesUseCase.Params(
+        val result = getMovieSearchUseCaseImpl.invoke(
+            params = GetMovieSearchUseCase.Params(
+                query = "",
                 PagingConfig(
                     pageSize = 20,
                     initialLoadSize = 20
@@ -55,7 +55,7 @@ class GetPopularMoviesUseCaseImplTest {
         ).first()
 
         //Then
-        verify(moviePopularRepository).getPopularMovies()
+        verify(movieSearchRepository).getSearchMovies(query = "")
         Truth.assertThat(result).isNotNull()
     }
 
@@ -63,13 +63,14 @@ class GetPopularMoviesUseCaseImplTest {
     fun `should emit an empty stream when an exception is thrown when calling the invoke method`() = runTest {
         //Given
         val exception = RuntimeException()
-        whenever(moviePopularRepository.getPopularMovies())
+        whenever(movieSearchRepository.getSearchMovies(query = ""))
             .thenThrow(exception)
 
         //When
-        val result = getPopularMoviesUseCase.invoke(
-            params = GetPopularMoviesUseCase.Params(
-                pagingConfig = PagingConfig(
+        val result = getMovieSearchUseCaseImpl.invoke(
+            params = GetMovieSearchUseCase.Params(
+                query = "",
+                PagingConfig(
                     pageSize = 20,
                     initialLoadSize = 20
                 )
@@ -78,7 +79,7 @@ class GetPopularMoviesUseCaseImplTest {
 
         //Then
         val resultList = result.toList()
-        verify(moviePopularRepository).getPopularMovies()
+        verify(movieSearchRepository).getSearchMovies(query = "")
         Truth.assertThat(resultList).isEmpty()
     }
 }
