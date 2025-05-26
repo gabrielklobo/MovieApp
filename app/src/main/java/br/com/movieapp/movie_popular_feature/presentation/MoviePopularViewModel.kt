@@ -29,11 +29,11 @@ class MoviePopularViewModel @Inject constructor(
 
         uiState = uiState.copy(movies = movies)
     }
+}
 
-    private fun pagingConfig(): PagingConfig {
-        return PagingConfig(
-            pageSize = 20,
-            initialLoadSize = 20
-        )
-    }
+private fun pagingConfig(): PagingConfig {
+    return PagingConfig(
+        pageSize = 20,
+        initialLoadSize = 20
+    )
 }

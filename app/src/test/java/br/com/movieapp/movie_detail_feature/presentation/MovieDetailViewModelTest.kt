@@ -78,10 +78,8 @@ class MovieDetailViewModelTest {
             //Given
             whenever(getMovieDetailsUseCase.invoke(any()))
                 .thenReturn(
-                    flowOf(
-                        ResultData.Success(
-                            flowOf(pagingData) to movieDetailsFactory
-                        )
+                    ResultData.Success(
+                        flowOf(pagingData) to movieDetailsFactory
                     )
                 )
 
@@ -104,7 +102,7 @@ class MovieDetailViewModelTest {
         val exception = Exception("Um erro ocorreu")
         whenever(getMovieDetailsUseCase.invoke(any()))
             .thenReturn(
-                flowOf(ResultData.Failure(exception))
+                ResultData.Failure(exception)
             )
 
         //When

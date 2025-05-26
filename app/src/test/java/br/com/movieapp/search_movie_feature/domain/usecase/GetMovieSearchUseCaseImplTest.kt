@@ -21,6 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class GetMovieSearchUseCaseImplTest {
+
     @get:Rule
     val dispatcherRule = TestDispatcherRule()
 
