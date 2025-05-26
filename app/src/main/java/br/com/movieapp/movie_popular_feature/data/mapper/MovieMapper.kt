@@ -4,6 +4,15 @@ import br.com.movieapp.core.data.remote.model.MovieResult
 import br.com.movieapp.core.domain.model.Movie
 import br.com.movieapp.core.util.toPostUrl
 
+fun MovieResult.toMovie(): Movie{
+    return Movie(
+        id = id,
+        title = title,
+        voteAverage = voteAverage,
+        imageUrl = posterPath.toPostUrl() ?: ""
+    )
+}
+
 fun List<MovieResult>.toMovie() = map { movieResult ->
     Movie(
         id = movieResult.id,

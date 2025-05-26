@@ -71,7 +71,7 @@ fun SearchContent(
                 movie?.let {
                     MovieItem(
                         voteAverage = it.voteAverage,
-                        imageUrl = it.imageURL,
+                        imageUrl = it.imageUrl,
                         id = it.id,
                         onClick = { movieId ->
                             onDetail(movieId)

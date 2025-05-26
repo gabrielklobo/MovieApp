@@ -40,6 +40,7 @@ fun MovieDetailSimilarMovies(
                 )
             }
         }
+
         pagingMoviesSimilar.apply {
             when {
                 loadState.refresh is LoadState.Loading -> {
@@ -75,7 +76,7 @@ fun MovieDetailSimilarMovies(
                     item(span = {
                         GridItemSpan(maxLineSpan)
                     }) {
-                        //Exemplo como Kotlin/Compose se comporta chamando a função que está por último no construtor da classe forma padrão
+                        //Exemplo como Kotlin/Compose se comporta chamando a função que está por último no construtor da classe, forma padrão
                         ErrorScreen(
                             message = error.error.message.toString(),
                             retry = { retry() }
